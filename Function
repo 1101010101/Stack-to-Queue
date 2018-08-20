@@ -1,0 +1,77 @@
+//如何仅用栈结构实现队列结构
+#include<iostream>
+#include<stdlib.h>
+#include<stack>
+using namespace std;
+
+typedef int queueEntry;
+
+class queue
+{
+public:
+	void push(queueEntry x);
+	void pop();
+	queueEntry peek();
+private:
+	stack<int> in;
+	stack<int> out;
+};
+
+int main()
+{
+	queue a;
+	a.push(10);
+	a.push(20);
+	a.push(30);
+	a.pop();
+	cout << a.peek() << endl;
+	system("pause");
+	return 0;
+}
+
+void queue::push(queueEntry x)
+{
+	in.push(x);
+}
+
+void queue::pop()
+{
+	if (!in.empty()||!out.empty())
+	{
+		if (out.empty())
+		{
+			while (!in.empty())
+			{
+				out.push(in.top());
+				in.pop();
+			}
+		}
+		out.pop();
+	}
+	else
+	{
+		cout << "The queue is EMPTY!" << endl;
+	}
+}
+
+queueEntry queue::peek()
+{
+	if (!in.empty() || !out.empty())
+	{
+		if (out.empty())
+		{
+			while (!in.empty())
+			{
+				out.push(in.top());
+				in.pop();
+			}
+		}
+		int x = out.top();
+		return x;
+	}
+	else
+	{
+		cout << "The queue is EMPTY!" << endl;
+		return -0xFFFF;
+	}
+}
